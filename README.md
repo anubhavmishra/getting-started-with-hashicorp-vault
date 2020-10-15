@@ -1,5 +1,5 @@
 # Getting Started with HashiCorp Vault
-Getting Started with HashiCorp Vault book code examples and configuration.
+[Getting Started with HashiCorp Vault](https://thevaultbook.com/) book code examples and configuration.
 
 ## Usage
 
