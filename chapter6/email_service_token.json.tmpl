@@ -1,0 +1,5 @@
+{
+   {{ with secret "kv/data/sendgrid" }}
+   "api_key": "{{ .Data.data.api_key }}"
+   {{ end }}
+}
