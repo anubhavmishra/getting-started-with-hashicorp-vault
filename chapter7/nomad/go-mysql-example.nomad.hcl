@@ -11,16 +11,16 @@ job "go-mysql-example" {
     task "server" {
 
       vault {
-        policies = ["mysql-database-access"]
+        policies = ["mysql-database-access"] #A
       }
 
       driver = "docker"
       config {
-        image = "anubhavmishra/go-mysql-example:latest"
+        image = "anubhavmishra/go-mysql-example:latest" #B
         ports = ["http"]
       }
 
-      template {
+      template { #C
         data        = <<EOH
           {{ with secret "database/creds/nomadmysqlaccess" }}
           MYSQL_USERNAME="{{.Data.username}}"
@@ -57,5 +57,3 @@ job "go-mysql-example" {
     }
   }
 }
-
-
