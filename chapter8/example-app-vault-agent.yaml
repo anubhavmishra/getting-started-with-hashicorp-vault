@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-with-secret
+  labels:
+    app: example-with-secret
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: example-with-secret
+  template:
+    metadata:
+      labels:
+        app: example-with-secret
+      annotations:
+        vault.hashicorp.com/agent-inject: 'true'
+        vault.hashicorp.com/role: 'example'
+        vault.hashicorp.com/agent-inject-secret-apikey: 'kv/data/email-service'
+        vault.hashicorp.com/agent-inject-template-apikey: |
+          {{- with secret "kv/data/email-service" -}}
+            export EXAMPLE_API_KEY="{{ .Data.data.example_api_key }}"
+          {{- end }}
+    spec:
+      serviceAccountName: default
+      containers:
+        - name: example
+          image: registry.k8s.io/e2e-test-images/agnhost:2.39
